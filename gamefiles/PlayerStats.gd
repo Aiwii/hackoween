@@ -1,11 +1,14 @@
 extends Node
 
 export (String) var pname
+
+#attributes
 export (int,0,10) var speed #how much time passes between houses
 export (int,0,10) var charm #how much candy is dropped
 export (int,0,10) var skill #likihood of door being answered
 export (int) var apoints
 
+#inventory
 export (int,0,999) var kingsize
 export (int,0,999) var cans
 export (int,0,999) var treatbags

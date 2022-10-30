@@ -1148,9 +1148,18 @@ shape = SubResource( 16 )
 [node name="GameOver" type="Node2D" parent="."]
 visible = false
 
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 760.0
+margin_bottom = 760.0
+rect_min_size = Vector2( 800, 800 )
+color = Color( 0.0862745, 0.0470588, 0.0352941, 1 )
+
 [node name="RichTextLabel" type="RichTextLabel" parent="GameOver"]
+margin_top = 104.0
 margin_right = 720.0
-margin_bottom = 440.0
+margin_bottom = 544.0
 custom_fonts/normal_font = SubResource( 17 )
 bbcode_enabled = true
 bbcode_text = "[center][tornado]GAME
@@ -1159,9 +1168,9 @@ text = "GAME
 OVER!"
 
 [node name="score" type="RichTextLabel" parent="GameOver"]
-margin_top = 432.0
+margin_top = 536.0
 margin_right = 720.0
-margin_bottom = 496.0
+margin_bottom = 600.0
 custom_fonts/normal_font = SubResource( 18 )
 bbcode_enabled = true
 bbcode_text = "[center][wave]score:"

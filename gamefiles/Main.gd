@@ -370,6 +370,7 @@ func _on_RING_pressed():
 		$House/HouseUI/RING.visible = true
 		changestate()
 	else:
+		$PlayerStats.timeleft -= 5
 		$House/Back/Litwindow.visible = false
 		yield(get_tree().create_timer(.5), "timeout")
 		$House/Back/Litwindow.visible = true
@@ -424,4 +425,16 @@ func _on_PlayerStats_outoftime():
 	$GameOver.visible = true
 	curstate = states.END
 	
-	var score
+	var score = 0
+	
+	score += $PlayerStats.kingsize * 2
+	score += $PlayerStats.cans * 2
+	score += $PlayerStats.treatbags * 2
+	score += $PlayerStats.snacksize / 2
+	score += $PlayerStats.chips / 2
+	score += $PlayerStats.candies / 2
+	score -= round($PlayerStats.water * 2.5)
+	score -= round($PlayerStats.veggies * 1.5)
+	score += round($PlayerStats.fruit * 0.5)
+	
+	$GameOver/score.bbcode_text = str("[center][wave]score: ", score)

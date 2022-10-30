@@ -1,6 +1,6 @@
 extends Node
 
-enum states {HOUSE, MINIGAME, OVERVIEW, TIMER}
+enum states {HOUSE, MINIGAME, OVERVIEW, TIMER, END}
 var curstate
 
 var overviewON = false

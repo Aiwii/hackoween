@@ -23,6 +23,7 @@ func generateh():
 	
 	if randf() < 0.6:
 		minigame = true
+		print("minigame")
 	else:
 		minigame = false
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://PlayerStats.gd" type="Script" id=1]
 [ext_resource path="res://HouseOptions.gd" type="Script" id=2]
@@ -31,6 +31,11 @@
 [ext_resource path="res://assets/candy/candyB.png" type="Texture" id=29]
 [ext_resource path="res://assets/candy/candyC.png" type="Texture" id=30]
 [ext_resource path="res://assets/candy/candyA.png" type="Texture" id=31]
+[ext_resource path="res://assets/mgback.png" type="Texture" id=32]
+[ext_resource path="res://assets/mgbag.png" type="Texture" id=33]
+[ext_resource path="res://Mgbag.gd" type="Script" id=34]
+[ext_resource path="res://assets/Templates/mgtemplate.png" type="Texture" id=35]
+[ext_resource path="res://assets/loadingbartexture.png" type="Texture" id=37]
 
 [sub_resource type="DynamicFont" id=2]
 size = 64
@@ -63,6 +68,54 @@ font_data = ExtResource( 16 )
 [sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.994413 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 316
+extra_spacing_top = -10
+font_data = ExtResource( 16 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 32
+extra_spacing_top = -3
+font_data = ExtResource( 16 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 64, 10 )
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 100, -200 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "loop"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 100, -200 ), Vector2( 620, -200 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 360, 10 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
@@ -1007,6 +1060,81 @@ damping = 20.0
 scale_amount = 0.3
 color_ramp = SubResource( 10 )
 
+[node name="Minigame" type="Node2D" parent="."]
+visible = false
+
+[node name="Back" type="Sprite" parent="Minigame"]
+texture = ExtResource( 32 )
+offset = Vector2( 360, 360 )
+
+[node name="multiplier" type="RichTextLabel" parent="Minigame"]
+margin_top = 105.0
+margin_right = 720.0
+margin_bottom = 337.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_clip_content = false
+custom_fonts/normal_font = SubResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[center][tornado radius=15 freq=3][font=res://DFSS2.tres]x[/font]2"
+text = "x2"
+scroll_active = false
+
+[node name="Tween" type="Tween" parent="Minigame/multiplier"]
+
+[node name="multiprompt" type="RichTextLabel" parent="Minigame"]
+margin_top = 353.0
+margin_right = 720.0
+margin_bottom = 377.0
+custom_fonts/normal_font = SubResource( 15 )
+bbcode_enabled = true
+bbcode_text = "[center][wave]candy multiplier"
+text = "candy multiplier"
+scroll_active = false
+
+[node name="Template" type="Sprite" parent="Minigame"]
+visible = false
+modulate = Color( 1, 1, 1, 0.533333 )
+position = Vector2( 360, 360 )
+texture = ExtResource( 35 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Mgbag" type="Sprite" parent="Minigame"]
+position = Vector2( 360, 528 )
+texture = ExtResource( 33 )
+script = ExtResource( 34 )
+
+[node name="Area2D" type="Area2D" parent="Minigame/Mgbag"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Minigame/Mgbag/Area2D"]
+position = Vector2( 0, -60 )
+shape = SubResource( 13 )
+
+[node name="emitter" type="Node2D" parent="Minigame"]
+position = Vector2( 100, -200 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Minigame/emitter"]
+autoplay = "loop"
+anims/RESET = SubResource( 11 )
+anims/loop = SubResource( 12 )
+
+[node name="TextureProgress" type="TextureProgress" parent="Minigame"]
+margin_right = 40.0
+margin_bottom = 40.0
+step = 0.1
+value = 100.0
+texture_progress = ExtResource( 37 )
+
+[node name="Tween" type="Tween" parent="Minigame/TextureProgress"]
+
+[node name="killm" type="Area2D" parent="Minigame"]
+position = Vector2( 360, 720 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Minigame/killm"]
+shape = SubResource( 16 )
+
 [connection signal="chachange" from="PlayerStats" to="." method="_on_PlayerStats_chachange"]
 [connection signal="changefail" from="PlayerStats" to="." method="_on_PlayerStats_changefail"]
 [connection signal="sklchange" from="PlayerStats" to="." method="_on_PlayerStats_sklchange"]
@@ -1016,3 +1144,7 @@ color_ramp = SubResource( 10 )
 [connection signal="pressed" from="OVERview/Control/UImain/AttsUI/SKL/SKLButton" to="PlayerStats" method="_on_SKLButton_pressed"]
 [connection signal="pressed" from="OVERview/Control/nexthouse" to="." method="_on_nexthouse_pressed"]
 [connection signal="pressed" from="House/HouseUI/RING" to="." method="_on_RING_pressed"]
+[connection signal="pressed" from="House/HouseUI/NEXT" to="." method="_on_NEXT_pressed"]
+[connection signal="mUP" from="Minigame/Mgbag" to="." method="_on_Mgbag_mUP"]
+[connection signal="body_entered" from="Minigame/Mgbag/Area2D" to="Minigame/Mgbag" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Minigame/killm" to="." method="_on_killm_body_entered"]

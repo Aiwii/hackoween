@@ -2,6 +2,8 @@ extends Node
 
 export (String) var pname
 
+export (int) var timeleft
+
 #attributes
 export (int,0,10) var speed #how much time passes between houses
 export (int,0,10) var charm #how much candy is dropped
@@ -25,17 +27,27 @@ signal sklchange
 
 signal changefail
 
+signal outoftime
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	timeleft = 420
 	apoints = 10
 	
 	return
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+func calctimeloss():
+	var umtloss = 30
+	umtloss -= speed*2
+	
+	timeleft = timeleft - umtloss
+	
+	if timeleft < 0:
+		timeleft = 0
+		emit_signal("outoftime")
+	
+	yield(get_tree(), "idle_frame")
+	return
 
 func _on_SKLButton_pressed():
 	if apoints > 0 && skill <= 10:

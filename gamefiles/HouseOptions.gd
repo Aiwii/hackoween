@@ -14,12 +14,14 @@ func _ready():
 func generateh():
 	#generates house variables for main
 	candylist.shuffle()
-	openchance = round(rand_range(70,100))
+	openchance = round(rand_range(15,100))
 	candy1 = randi() % candylist.size()
 	candy2 = randi() % candylist.size()
 	candy3 = randi() % candylist.size()
 	
-	if randf() > 0.6:
+	print("openchance is: ", openchance)
+	
+	if randf() < 0.6:
 		minigame = true
 	else:
 		minigame = false

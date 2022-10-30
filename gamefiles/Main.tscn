@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://PlayerStats.gd" type="Script" id=1]
 [ext_resource path="res://HouseOptions.gd" type="Script" id=2]
@@ -19,6 +19,18 @@
 [ext_resource path="res://assets/nexthousehover.png" type="Texture" id=17]
 [ext_resource path="res://assets/nexthouse.png" type="Texture" id=18]
 [ext_resource path="res://assets/nexthouseclick.png" type="Texture" id=19]
+[ext_resource path="res://assets/clockring.png" type="Texture" id=20]
+[ext_resource path="res://assets/Templates/timertemplate.png" type="Texture" id=21]
+[ext_resource path="res://assets/houseback.png" type="Texture" id=22]
+[ext_resource path="res://assets/Templates/housetemplate.png" type="Texture" id=23]
+[ext_resource path="res://assets/player.png" type="Texture" id=24]
+[ext_resource path="res://assets/litwindow.png" type="Texture" id=25]
+[ext_resource path="res://assets/ring.png" type="Texture" id=26]
+[ext_resource path="res://assets/ringhover.png" type="Texture" id=27]
+[ext_resource path="res://assets/ringclick.png" type="Texture" id=28]
+[ext_resource path="res://assets/candy/candyB.png" type="Texture" id=29]
+[ext_resource path="res://assets/candy/candyC.png" type="Texture" id=30]
+[ext_resource path="res://assets/candy/candyA.png" type="Texture" id=31]
 
 [sub_resource type="DynamicFont" id=2]
 size = 64
@@ -38,8 +50,30 @@ font_data = ExtResource( 16 )
 
 [sub_resource type="StyleBoxEmpty" id=7]
 
+[sub_resource type="DynamicFont" id=8]
+size = 128
+extra_spacing_top = -10
+font_data = ExtResource( 16 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 32
+extra_spacing_top = -3
+font_data = ExtResource( 16 )
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.994413 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 760.0
+margin_bottom = 760.0
+rect_min_size = Vector2( 800, 800 )
+color = Color( 0.0862745, 0.0470588, 0.0352941, 1 )
 
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource( 1 )
@@ -48,6 +82,7 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="OVERview" type="Node2D" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="OVERview"]
 margin_left = -40.0
@@ -716,6 +751,262 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="OVERview"]
 
+[node name="Timer" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Timer"]
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 760.0
+margin_bottom = 760.0
+rect_min_size = Vector2( 800, 800 )
+color = Color( 0.0862745, 0.0470588, 0.0352941, 1 )
+
+[node name="clock" type="TextureRect" parent="Timer"]
+margin_left = 176.0
+margin_top = 176.0
+margin_right = 540.0
+margin_bottom = 540.0
+rect_pivot_offset = Vector2( 182, 182 )
+texture = ExtResource( 20 )
+
+[node name="UIlabels" type="VBoxContainer" parent="Timer"]
+margin_top = 296.0
+margin_right = 720.0
+margin_bottom = 413.0
+custom_constants/separation = -3
+alignment = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TimeLabel" type="RichTextLabel" parent="Timer/UIlabels"]
+margin_right = 720.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 192, 96 )
+rect_clip_content = false
+custom_colors/default_color = Color( 1, 0.992157, 0.862745, 1 )
+custom_fonts/normal_font = SubResource( 8 )
+bbcode_enabled = true
+bbcode_text = "[center]420"
+text = "420"
+scroll_active = false
+
+[node name="minutesleft" type="RichTextLabel" parent="Timer/UIlabels"]
+margin_top = 93.0
+margin_right = 720.0
+margin_bottom = 117.0
+rect_min_size = Vector2( 248, 24 )
+custom_colors/default_color = Color( 1, 0.992157, 0.862745, 1 )
+custom_fonts/normal_font = SubResource( 9 )
+bbcode_enabled = true
+bbcode_text = "[center][wave]minutes left"
+text = "minutes left"
+scroll_active = false
+
+[node name="Template" type="Sprite" parent="Timer"]
+visible = false
+modulate = Color( 1, 1, 1, 0.054902 )
+position = Vector2( 360, 360 )
+texture = ExtResource( 21 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Tween" type="Tween" parent="Timer"]
+
+[node name="House" type="Node2D" parent="."]
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="House"]
+offset = Vector2( 360, 320 )
+
+[node name="Back" type="Sprite" parent="House"]
+position = Vector2( 0, -62 )
+texture = ExtResource( 22 )
+offset = Vector2( 360, 360 )
+
+[node name="Litwindow" type="Sprite" parent="House/Back"]
+visible = false
+position = Vector2( 632, 353 )
+texture = ExtResource( 25 )
+
+[node name="Tween" type="Tween" parent="House"]
+
+[node name="Player" type="Sprite" parent="House"]
+position = Vector2( 270, 448 )
+texture = ExtResource( 24 )
+
+[node name="HouseUI" type="Control" parent="House"]
+margin_right = 720.0
+margin_bottom = 720.0
+
+[node name="RING" type="TextureButton" parent="House/HouseUI"]
+margin_left = 163.0
+margin_top = 542.0
+margin_right = 557.0
+margin_bottom = 665.0
+texture_normal = ExtResource( 26 )
+texture_pressed = ExtResource( 28 )
+texture_hover = ExtResource( 27 )
+
+[node name="NEXT" type="TextureButton" parent="House/HouseUI"]
+margin_left = 247.0
+margin_top = 642.0
+margin_right = 474.0
+margin_bottom = 703.0
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 19 )
+texture_hover = ExtResource( 17 )
+
+[node name="Template" type="Sprite" parent="House"]
+visible = false
+modulate = Color( 1, 1, 1, 0.533333 )
+position = Vector2( 360, 360 )
+texture = ExtResource( 23 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CandySpray" type="Node2D" parent="House"]
+position = Vector2( 430, 352 )
+
+[node name="KS" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 6 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.3
+color_ramp = SubResource( 10 )
+
+[node name="CAN" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 4
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 8 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.5
+color_ramp = SubResource( 10 )
+
+[node name="TB" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 4 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.5
+color_ramp = SubResource( 10 )
+
+[node name="SS" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 5 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.3
+color_ramp = SubResource( 10 )
+
+[node name="CH" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 12 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.5
+color_ramp = SubResource( 10 )
+
+[node name="CAA" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 31 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.3
+color_ramp = SubResource( 10 )
+
+[node name="CAB" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 29 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.3
+color_ramp = SubResource( 10 )
+
+[node name="CAC" type="CPUParticles2D" parent="House/CandySpray"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+texture = ExtResource( 30 )
+direction = Vector2( -30, 0 )
+spread = 65.0
+initial_velocity = 500.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 20.0
+damping = 20.0
+scale_amount = 0.3
+color_ramp = SubResource( 10 )
+
 [connection signal="chachange" from="PlayerStats" to="." method="_on_PlayerStats_chachange"]
 [connection signal="changefail" from="PlayerStats" to="." method="_on_PlayerStats_changefail"]
 [connection signal="sklchange" from="PlayerStats" to="." method="_on_PlayerStats_sklchange"]
@@ -724,3 +1015,4 @@ __meta__ = {
 [connection signal="pressed" from="OVERview/Control/UImain/AttsUI/CHA/CHAButton" to="PlayerStats" method="_on_CHAButton_pressed"]
 [connection signal="pressed" from="OVERview/Control/UImain/AttsUI/SKL/SKLButton" to="PlayerStats" method="_on_SKLButton_pressed"]
 [connection signal="pressed" from="OVERview/Control/nexthouse" to="." method="_on_nexthouse_pressed"]
+[connection signal="pressed" from="House/HouseUI/RING" to="." method="_on_RING_pressed"]

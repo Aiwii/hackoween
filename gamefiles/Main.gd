@@ -418,3 +418,10 @@ func _on_killm_body_entered(_body):
 	tweenMUL.interpolate_property($Minigame/multiplier, "rect_scale", $Minigame/multiplier.rect_scale, Vector2(1, 1),0.3,Tween.TRANS_BACK,Tween.EASE_IN_OUT,0.25)
 	tweenMUL.start()
 	$Minigame/multiplier.bbcode_text = str("[center][tornado radius=15 freq=3][font=res://DFSS2.tres]x[/font]",m)
+
+
+func _on_PlayerStats_outoftime():
+	$GameOver.visible = true
+	curstate = states.END
+	
+	var score

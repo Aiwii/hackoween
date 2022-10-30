@@ -23,7 +23,9 @@ export (int,0,999) var fruit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	apoints = 10
+	
+	return
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

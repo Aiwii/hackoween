@@ -65,6 +65,7 @@ func _process(_delta):
 			yield(get_tree(),"idle_frame")
 
 func changestate():
+	$PlayerStats.clampcandy()
 	yield(get_tree(),"idle_frame")
 	if curstate == states.OVERVIEW:
 		curstate = states.TIMER
@@ -411,7 +412,7 @@ func _on_Mgbag_mUP():
 
 func _on_killm_body_entered(_body):
 	if curstate == states.MINIGAME:
-		m = 0
+		m -= 5
 	var tweenMUL = $Minigame/multiplier/Tween
 	tweenMUL.interpolate_property($Minigame/multiplier, "rect_scale", $Minigame/multiplier.rect_scale, Vector2(1.1, 1.1),0.1,Tween.TRANS_BACK,Tween.EASE_IN)
 	tweenMUL.interpolate_property($Minigame/multiplier, "rect_scale", $Minigame/multiplier.rect_scale, Vector2(1, 1),0.3,Tween.TRANS_BACK,Tween.EASE_IN_OUT,0.25)

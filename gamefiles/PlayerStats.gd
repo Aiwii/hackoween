@@ -36,6 +36,14 @@ func _ready():
 	
 	return
 
+func clampcandy():
+	kingsize = clamp(kingsize,0,999)
+	cans = clamp(cans,0,999)
+	treatbags = clamp(treatbags,0,999)
+	snacksize = clamp(snacksize,0,999)
+	chips = clamp(chips,0,999)
+	candies = clamp(candies,0,999)
+
 func calctimeloss():
 	var umtloss = 30
 	umtloss -= speed*2
